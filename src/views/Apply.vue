@@ -106,7 +106,7 @@ export default {
           this.userName = ''
           this.userPhone = ''
           this.$comfun.showToast(this, '提交成功')
-          if (Number(this.level) < 3) {
+          if (Number(this.level) < 3 && Number(data.data.level) < 4) {
             this.$router.replace({
               path: '/',
               query: {
