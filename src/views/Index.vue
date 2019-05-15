@@ -19,6 +19,22 @@
       </div>
     </div>
     <span :class="['transpondBtn', showShareTip ? 'hasShowShareTipBtn' : '']" @click="maImg ? (showShareTip = !showShareTip) : (showLoginModal = true)">转发邀请</span>
+    <div class="footerExplain">
+      <div class="rulesTitle">
+        <span>活动说明
+          <img class="ruleTitleImg before" :src="$rule_ic">
+          <img class="ruleTitleImg after" :src="$rule_ic">
+        </span>
+      </div>
+      <div :class="['ruleItemWrap', ruleIndex == rules.length - 1 ? 'isLastRuleItemWrap' : '']" :itemIndex="ruleIndex + 1" v-for="(rule, ruleIndex) in rules" :key="ruleIndex">
+        <span>{{rule}}</span>
+      </div>
+      <div class="phoneWrap">
+        <img :src="$icon_phone">
+        <span @click="$comfun.callPhone(serverPhone)">详询：{{serverPhone}}</span>
+      </div>
+      <div class="copyright">活动最终解释权归山西大昌汽车集团所有</div>
+    </div>
     <img class="embellish_icon embellish_3" :src="$embellish_6">
     <Modal :showHead="false" :showButton="false" :show="showLoginModal" @close="showLoginModal = false">
       <template slot="body">
@@ -52,7 +68,13 @@ export default {
       loginBtnCanUse: false,
       showShareTip: false,
       maImg: null,
-      userInfo: null
+      userInfo: null,
+      rules: [
+        '即日起止5月30日，每推荐10名好友通过您的专属码报名，即奖励大昌出行10元体验券1张；（每人至少推荐10名）',
+        '通过您的专属码报名的好友，凡成功购车，您即可再得300元现金奖励',
+        '活动中一经发现作弊行为，将取消奖励资格'
+      ],
+      serverPhone: '0351-3185985'
     }
   },
   created () {
@@ -243,7 +265,7 @@ export default {
   font-size: 1.2rem;
   margin: 0 1.2rem;
   box-shadow: inset 0px -20px 1rem 2px rgba(76, 76, 76, 0.36);
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
   z-index: 1;
 }
 .transpondBtn::before {
@@ -257,6 +279,112 @@ export default {
   height: 100%;
   border-radius: 20rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.footerExplain {
+  position: relative;
+  background-color: #9D0009;
+  .rulesTitle {
+    position: relative;
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 2rem 0 0.4rem;
+    color: #FFF8A0;
+    span {
+      position: relative;
+      display: inline-block;
+      padding: 0 2.4rem;
+      .ruleTitleImg {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+        width: 1.4rem;
+      }
+      .before {
+        left: 0;
+      }
+      .after {
+        right: 0;
+      }
+    }
+  }
+  .ruleItemWrap {
+    position: relative;
+    padding: 0.7rem 1.2rem;
+    color: #ffffff;
+    font-size: 0.9rem;
+    z-index: 8;
+    span {
+      position: relative;
+      display: inline-block;
+      margin-left: 0.8rem;
+      width: calc(100% - 0.8rem - 1.2rem);
+      vertical-align: top;
+    }
+  }
+  .ruleItemWrap::before {
+    content: attr(itemIndex);
+    position: relative;
+    display: inline-block;
+    width: 1.2rem;
+    height: 1.1rem;
+    text-align: center;
+    line-height: 1.1rem;
+    font-weight: bold;
+    background-color: #FFF8A0;
+    color: #C1000F;
+    border-radius: 50%;
+    vertical-align: top;
+    padding-top: 0.1rem;
+  }
+  .isLastRuleItemWrap {
+    padding-bottom: 3rem;
+  }
+  .phoneWrap {
+    position: relative;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 1.4rem;
+    font-size: 1.4rem;
+    color: #ffffff;
+    font-weight: bold;
+    img {
+      position: relative;
+      width: 1.8rem;
+      height: 1.8rem;
+      margin-right: 1rem;
+    }
+    span {
+      position: relative;
+      display: inline-block;
+    }
+  }
+  .copyright {
+    position: relative;
+    text-align: right;
+    font-size: 0.8rem;
+    color: #ffffff;
+    padding-right: 1.4rem;
+    margin-top: 1rem;
+    padding-bottom: 3rem;
+    transform: scale(0.9);
+    transform-origin: right center 0;
+  }
+}
+.footerExplain::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3rem;
+  top: -3rem;
+  background: -webkit-linear-gradient(#ffffff, #9D0009); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(#ffffff, #9D0009); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(#ffffff, #9D0009); /* Firefox 3.6 - 15 */
+  background: linear-gradient(#ffffff, #9D0009); /* 标准的语法 */
 }
 .hasShowShareTipBtn {
   background-color: #545454;

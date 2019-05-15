@@ -51,10 +51,6 @@ AxiosInstance.interceptors.response.use((response) => {
       })
     }
   }
-  if (loginDialog != null) {
-    loginDialog.destory()
-    loginDialog = null
-  }
   return Promise.reject(error)
 })
 const FileAxiosInstance = axios.create({

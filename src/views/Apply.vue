@@ -21,7 +21,11 @@
         </span>
       </div>
       <div :class="['ruleItemWrap', ruleIndex == getRules.length - 1 ? 'isLastRuleItemWrap' : '']" :itemIndex="ruleIndex + 1" v-for="(rule, ruleIndex) in getRules" :key="ruleIndex">
-        <span>{{rule}}</span>
+        <span v-if="typeof rule == 'string'">{{rule}}</span>
+        <div v-if="typeof rule != 'string'">
+          <span>{{rule.txt}}</span>
+          <span v-for="(p, pIndex) in rule.phoneNumbers" :key="pIndex" :class="pIndex > 0 ? 'phoneLink' : ''" @click="$comfun.callPhone(p)">{{p}}</span>
+        </div>
       </div>
     </div>
     <img class="embellish_icon embellish_5" :src="$embellish_6">
@@ -46,7 +50,10 @@ export default {
         '点击报名，即可凭报名信息在大昌主题展区领取感恩礼一份',
         '拍摄活动现场照片发送至朋友圈，可在红包墙抽取感恩红包',
         '现场购车即享一年常规保养、再送太阳膜+脚垫',
-        '抢订热线：3188111  3185985',
+        {
+          txt: '抢订热线：',
+          phoneNumbers: [3188111, 3185985]
+        },
         '活动地址：煤炭交易中心大昌集团主题展区F5-F8、特价展区F3'
       ],
       rules2: [ // 员工
@@ -55,16 +62,23 @@ export default {
         '通过扫您的专属码报名的好友，凡成功购车，您即可再得300元现金奖励',
         '活动中如果发现通过作弊手段获得奖励的，将取消奖励',
         '活动最终解释权归山西大昌汽车集团所有',
-        '咨询热线：3185985或者3188111'
+        {
+          txt: '咨询热线：',
+          phoneNumbers: [3188111, 3185985]
+        }
       ],
       rules3: [ // 对应推广人
         '活动时间：5月16日~20日',
         '点击报名，即可凭报名信息在大昌主题展区领取感恩礼一份',
         '拍摄活动现场照片发送至朋友圈，可在红包墙抽取感恩红包',
         '现场购车即享一年常规保养、再送太阳膜+脚垫',
-        '抢订热线：3188111  3185985',
+        {
+          txt: '抢订热线：',
+          phoneNumbers: [3188111, 3185985]
+        },
         '活动地址：煤炭交易中心大昌集团主题展区F5-F8、特价展区F3'
-      ]
+      ],
+
     }
   },
   computed: {
@@ -141,7 +155,7 @@ export default {
   background-color: #ffffff;
   border-radius: 8px 8px 0 0;
   box-shadow: 0 0 10px rgba(50, 50, 50, .2);
-  margin-top: -4.2rem;
+  margin-top: -1.6rem;
   padding-bottom: 1.8rem;
   z-index: 1;
   .formTitle {
@@ -227,12 +241,24 @@ export default {
     color: #ffffff;
     font-size: 0.9rem;
     z-index: 8;
-    span {
+    >span {
       position: relative;
       display: inline-block;
       margin-left: 0.8rem;
       width: calc(100% - 0.8rem - 1.2rem);
       vertical-align: top;
+    }
+    >div {
+      position: relative;
+      display: inline-block;
+      margin-left: 0.8rem;
+      width: calc(100% - 0.8rem - 1.2rem);
+      vertical-align: top;
+      span.phoneLink {
+        position: relative;
+        display: inline-block;
+        margin-left: 1rem;
+      }
     }
   }
   .ruleItemWrap::before {
@@ -260,15 +286,17 @@ export default {
   bottom: 0;
 }
 .embellish_1 {
-  width: 2.5rem;
+  width: 2.2rem;
   left: 0;
   bottom: 12rem;
 }
 .embellish_2 {
+  width: 1.8rem;
   right: 0;
   bottom: 6rem;
 }
 .embellish_3 {
+  width: 2.8rem;
   left: 0;
   bottom: 2rem;
   z-index: 9;

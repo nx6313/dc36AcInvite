@@ -20,7 +20,6 @@ const WheelPicker = require('wheel-picker')
 var key = CryptoJS.enc.Utf8.parse("123456789zxcvbnm")
 var iv = CryptoJS.enc.Utf8.parse("123456789zxcvbnm")
 
-var loginDialog = null // 用户登录弹窗
 var dialogPrompt = null // 带有输入框的dialog弹出框
 var picker = null // picker选择器
 var signPanel = null // 签名板
@@ -257,37 +256,6 @@ export default {
           defalutValue: defalutValue
         })
         return dialogPrompt
-      },
-      // 显示提示用户登陆的dialog弹出框
-      showDialogForLogin: function (context, title, message, rule, ruleOkTip, ruleErrorTip, sendSmsCodeCallBack, okCallBack) {
-        if (title === undefined) title = '未定义标题'
-        if (sendSmsCodeCallBack === undefined) sendSmsCodeCallBack = () => {}
-        if (okCallBack === undefined) okCallBack = () => {}
-        let btns = [
-          {
-            label: '取消登录',
-            onClick: () => {}
-          },
-          {
-            label: '确认登录',
-            onClick: (phone, code) => {
-              loginDialog = null
-              return okCallBack(phone, code)
-            }
-          }
-        ]
-        loginDialog = context.$dialog_prompt({
-          title: title,
-          msg: message,
-          showCancel: true,
-          rule: rule,
-          ruleOkTip: ruleOkTip,
-          ruleErrorTip: ruleErrorTip,
-          buttons: btns,
-          sendSmsCodeCallBack: sendSmsCodeCallBack,
-          isLogin: true
-        })
-        return loginDialog
       },
       // 显示Toast
       showToast: function(context, msg, duration) {
@@ -617,6 +585,10 @@ export default {
           paramStr = paramStr.substr(0, paramStr.length - 1)
         }
         return paramStr
+      },
+      // 调用拨号功能
+      callPhone (phoneNumber) {
+        window.location.href = `tel://${phoneNumber}`
       }
     }
 
